@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "HL7App.AppHost/HL7App.AppHost.csproj"
+  }
+}
