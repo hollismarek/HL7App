@@ -54,3 +54,12 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.hl7-message {
+    max-width: 600px;
+    overflow: scroll;
+}
+
+.selected, .selected td {
+    background-color: #e0e0e0;
+}

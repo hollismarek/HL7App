@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HL7App.Models\HL7App.Models.csproj" />
     <ProjectReference Include="..\HL7App.ServiceDefaults\HL7App.ServiceDefaults.csproj" />
   </ItemGroup>
 

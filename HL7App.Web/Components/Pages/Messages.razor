@@ -1,0 +1,95 @@
+﻿@page "/messages"
+@using HL7App.Models
+@attribute [StreamRendering(true)]
+
+@inject MessageApiClient MessageApi
+@rendermode InteractiveServer
+
+<PageTitle>HL7 Messages</PageTitle>
+
+@if (messages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Message ID</th>
+                <th>Message Type</th>
+                <th>Message Event</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in messages)
+            {
+                string rowClass = "";
+                if (currentMessage?.Id == message.Id)
+                {
+                    rowClass = "selected";
+                }
+                <tr class="@rowClass">
+                    <td>@message.MessageId</td>
+                    <td>@message.MessageType</td>
+                    <td>@message.MessageEvent</td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="() => DeleteMessage(message.Id, !String.IsNullOrEmpty(rowClass))">Delete</button>
+                        <button class="btn btn-info" @onclick="() => ShowMessage(message.Id)">Show</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <InputFile OnChange="@UploadMessage" />
+
+    @if (currentMessage != null)
+    {
+        <pre class="hl7-message">@currentMessage.MessageContent.Replace('\r', '\n')</pre>
+        <form class="hl7-details">
+            <label for="patient_first_name">Patient First Name</label>
+            <input id="patient_firstname" disabled value="@currentMessage.GetValueFromMessage("PID",5,2)" />
+            <label for="patient_last_name">Patient last Name</label>
+            <input id="patient_lastname" disabled value="@currentMessage.GetValueFromMessage("PID", 5, 1)" />
+        </form>
+    }
+
+}
+
+@code {
+    private HL7Message[]? messages;
+    private HL7Message? currentMessage = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        messages = await MessageApi.GetMessagesAsync();        
+    }
+
+    private async Task UploadMessage(InputFileChangeEventArgs e)
+    {
+        using (var stream = e.File.OpenReadStream())
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                var content = await reader.ReadToEndAsync();
+                await MessageApi.CreateMessageAsync(content);
+            }
+        }
+        messages = await MessageApi.GetMessagesAsync();
+    }
+
+    private async Task DeleteMessage(int id, bool isSelected)
+    {
+        await MessageApi.DeleteMessageAsync(id);
+        if (isSelected)
+        {
+            currentMessage = null;
+        }
+        messages = await MessageApi.GetMessagesAsync();
+    }
+    void ShowMessage(int id)
+    {
+        currentMessage = messages?.FirstOrDefault(m => m.Id == id);
+    }
+}

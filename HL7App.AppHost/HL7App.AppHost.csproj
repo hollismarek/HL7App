@@ -13,4 +13,8 @@
     <ProjectReference Include="..\HL7App.Web\HL7App.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Sqlite" Version="13.3.0" />
+  </ItemGroup>
+
 </Project>
