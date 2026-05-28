@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HL7App.AppHost\HL7App.AppHost.csproj" />
+    <ProjectReference Include="..\HL7App.Models\HL7App.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,15 @@
     <Using Include="Aspire.Hosting.ApplicationModel" />
     <Using Include="Aspire.Hosting.Testing" />
     <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="HL7Messages\A01Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="HL7Messages\A04Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
