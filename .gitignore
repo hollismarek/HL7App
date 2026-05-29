@@ -363,5 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # sqlite database
-hl7messages.db
-hl7messages.db-shm
+hl7messages.db*
