@@ -1,6 +1,6 @@
 # HL7App
 
-Simple .NET 8 sample application for uploading, storing and viewing HL7 v2 messages.
+A simple .NET 8 sample application for uploading, storing and viewing HL7 v2 messages.
 
 Built with:
 - ASP.NET Core
